@@ -31,4 +31,7 @@ public class Interesado {
     @OneToMany(mappedBy = "interesado")
     private Set<Prueba> pruebas = new HashSet<>();
 
+    public Date getFechaVtoLicencia() {
+        return fechaVencimientoLicencia;
+    }
 }
