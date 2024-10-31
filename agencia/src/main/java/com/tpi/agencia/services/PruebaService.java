@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 @Service
 public class PruebaService {
@@ -24,49 +25,78 @@ public class PruebaService {
         this.interesadoRepository = interesadoRepository;
     }
 
-    @Transactional
-    public Prueba create(PruebaDto prueba) {
+    public PruebaDto create(PruebaDto prueba) {
         Prueba nuevaPrueba = buildPruebaFromDto(prueba);
-        return repository.save(nuevaPrueba);
+        Prueba savedPrueba = repository.save(nuevaPrueba);
+        return new PruebaDto(savedPrueba);
     }
 
-    public Prueba findById(Integer id) throws ServiceException {
-        return repository.findById(id).orElseThrow(() -> new ServiceException("Prueba no encontrada"));
+    public PruebaDto findById(Integer id) throws ServiceException {
+        return repository.findById(id).map(PruebaDto::new).orElseThrow(() ->
+                new ServiceException("Prueba no encontrada")
+        );
     }
 
-    public Iterable<Prueba> findAll() {
-        return repository.findAll();
+    public Iterable<PruebaDto> findAll() {
+        Iterable<Prueba> pruebas = repository.findAll();
+        return StreamSupport.stream(pruebas.spliterator(), false).map(PruebaDto::new).toList();
     }
 
-    public List<Prueba> getPruebasEnCurso() {
-        return repository.findByFechaHoraFinIsNull();
+    public List<PruebaDto> getPruebasEnCurso() {
+        return repository.findByFechaHoraFinIsNull().stream().map(PruebaDto::new).toList();
     }
 
-    public Prueba finalizarPrueba(Integer id, String comentarios) {
-        Prueba prueba = repository.findById(id)
+    public PruebaDto updatePrueba(Integer id, PruebaDto pruebaDto) {
+        Prueba existingPrueba = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Prueba no encontrada"));
 
-        if (prueba.getFechaHoraFin() != null) {
-            throw new IllegalArgumentException("La prueba ya ha sido finalizada.");
-        }
+        existingPrueba.setId(id);
+        existingPrueba.setFechaHoraInicio(pruebaDto.getFechaHoraInicio());
 
-        prueba.setFechaHoraFin(new Date());
-        prueba.setComentarios(comentarios);
+        // actualizar relaciones
+        Vehiculo vehiculo = vehiculoRepository.findById(pruebaDto.getVehiculo().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Vehículo no encontrado"));
+        existingPrueba.setVehiculo(vehiculo);
 
-        return repository.save(prueba);
+        Empleado empleado = empleadoRepository.findById(pruebaDto.getEmpleado().getLegajo())
+                .orElseThrow(() -> new IllegalArgumentException("Empleado no encontrado"));
+        existingPrueba.setEmpleado(empleado);
+
+        Interesado interesado = interesadoRepository.findById(pruebaDto.getInteresado().getId())
+                .orElseThrow(() -> new IllegalArgumentException("Interesado no encontrado"));
+        existingPrueba.setInteresado(interesado);
+
+        Prueba updatedPrueba = repository.save(existingPrueba);
+
+        return new PruebaDto(updatedPrueba);
     }
 
-    private Prueba buildPruebaFromDto(PruebaDto pruebaDto) {
-        Vehiculo vehiculo = vehiculoRepository.findById(pruebaDto.getIdVehiculo())
-                .orElseThrow(() -> new IllegalArgumentException("Vehículo no encontrado"));
-        if (repository.existsByVehiculoIdAndFechaHoraFinIsNull(vehiculo.getId())) {
-            throw new IllegalArgumentException("El vehículo está siendo probado.");
+    public Prueba finalizarPrueba(Integer id, String comentario) {
+        Prueba pruebaEnCurso = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Prueba no encontrada"));
+
+        if (pruebaEnCurso.getFechaHoraFin() != null) {
+            throw new IllegalStateException("La prueba ya ha sido finalizada.");
         }
 
-        Empleado empleado = empleadoRepository.findById(pruebaDto.getIdEmpleado())
-                .orElseThrow(() -> new IllegalArgumentException("Empleado no encontrado"));
+        pruebaEnCurso.setFechaHoraFin(new Date());
+        pruebaEnCurso.setComentarios(comentario);
 
-        Interesado interesado = interesadoRepository.findById(pruebaDto.getIdInteresado())
+        return repository.save(pruebaEnCurso);
+    }
+
+    private Vehiculo validarVehiculoDisponible(Integer idVehiculo) {
+        Vehiculo vehiculo = vehiculoRepository.findById(idVehiculo)
+                .orElseThrow(() -> new IllegalArgumentException("Vehículo no encontrado"));
+        // todos los vehiculos se asumen patentados por lo que no es necesario validar la patente
+        if (repository.existsByVehiculoIdAndFechaHoraFinIsNull(idVehiculo)) {
+            throw new IllegalArgumentException("El vehículo está siendo probado.");
+        }
+        return vehiculo;
+    }
+
+    private Interesado validarInteresado(Integer idInteresado) {
+        Interesado interesado = interesadoRepository.findById(idInteresado)
                 .orElseThrow(() -> new IllegalArgumentException("Interesado no encontrado"));
         if (interesado.getFechaVtoLicencia().before(new Date())) {
             throw new IllegalArgumentException("La licencia del interesado está vencida.");
@@ -74,6 +104,16 @@ public class PruebaService {
         if (interesado.getRestringido()) {
             throw new IllegalArgumentException("El interesado está restringido para probar vehículos.");
         }
+        return interesado;
+    }
+
+
+    private Prueba buildPruebaFromDto(PruebaDto pruebaDto) {
+        Vehiculo vehiculo = validarVehiculoDisponible(pruebaDto.getVehiculo().getId());
+        Interesado interesado = validarInteresado(pruebaDto.getInteresado().getId());
+
+        Empleado empleado = empleadoRepository.findById(pruebaDto.getEmpleado().getLegajo())
+                .orElseThrow(() -> new IllegalArgumentException("Empleado no encontrado"));
 
         Prueba prueba = new Prueba();
         prueba.setVehiculo(vehiculo);
@@ -89,6 +129,7 @@ public class PruebaService {
                 .orElseThrow(() -> new IllegalArgumentException("Prueba no encontrada"));
         repository.delete(existingPrueba);
     }
+
 }
 
 
