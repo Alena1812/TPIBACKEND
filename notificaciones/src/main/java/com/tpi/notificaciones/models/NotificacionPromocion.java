@@ -28,8 +28,8 @@ public class NotificacionPromocion extends Notificacion {
     }
 
     // Constructor completo (incluyendo ID y atributos de la superclase)
-    public NotificacionPromocion(Integer id, LocalDateTime fechaNotificacion, String mensaje, String codigoPromocion, LocalDate fechaExpiracion) {
-        super(id, fechaNotificacion, mensaje);
+    public NotificacionPromocion(Integer id, LocalDateTime fechaNotificacion, String texto, String codigoPromocion, LocalDate fechaExpiracion) {
+        super(id, fechaNotificacion, texto);
         this.codigoPromocion = codigoPromocion;
         this.fechaExpiracion = fechaExpiracion;
     }

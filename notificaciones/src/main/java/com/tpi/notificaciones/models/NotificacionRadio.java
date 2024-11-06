@@ -11,25 +11,25 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Entity
-@Table(name = "NOTIFICACION_RADIO_EXCEDIDO")
+@Table(name = "NOTIFICACION_RADIO")
 public class NotificacionRadio extends Notificacion {
 
     //Atributos
-    private double radioMaximo;
-    private String ubicacionActual;
-    private Integer idPrueba;
+    private double latitud;
+    private double longitud;
+    private Integer idVehiculo;
 
     //Constructor
-    public NotificacionRadio(double radioMaximo, String ubicacionActual, Integer idPrueba) {
-        this.radioMaximo = radioMaximo;
-        this.ubicacionActual = ubicacionActual;
-        this.idPrueba = idPrueba;
+    public NotificacionRadio(double latitud, double longitud, Integer idVehiculo) {
+        this.latitud = latitud;
+        this.longitud = longitud;
+        this.idVehiculo = idVehiculo;
     }
 
-    public NotificacionRadio(Integer id, LocalDateTime fechaNotificacion, String mensaje, double radioMaximo, String ubicacionActual, Integer idPrueba) {
-        super(id, fechaNotificacion, mensaje);
-        this.radioMaximo = radioMaximo;
-        this.ubicacionActual = ubicacionActual;
-        this.idPrueba = idPrueba;
+    public NotificacionRadio(Integer id, LocalDateTime fechaNotificacion, String texto, double latitud, double longitud, Integer idVehiculo) {
+        super(id, fechaNotificacion, texto);
+        this.latitud = latitud;
+        this.longitud = longitud;
+        this.idVehiculo = idVehiculo;
     }
 }
