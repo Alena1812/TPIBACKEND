@@ -12,10 +12,13 @@ public class RestriccionesService {
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Value("${tpi-agencia.microservicio-restricciones.url}")
-    private String url;
+    private String urlRestricciones;
+
+    @Value(("${tpi-agencia.microservicio-notificaciones.url}"))
+    private String urlNotificaciones;
 
     @Cacheable("restrictionsApiCache")
     public RestriccionesDto getRestricciones() {
-        return restTemplate.getForObject(url, RestriccionesDto.class);
+        return restTemplate.getForObject(urlRestricciones, RestriccionesDto.class);
     }
 }
