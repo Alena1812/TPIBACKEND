@@ -4,10 +4,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AgenciaApplication {
+public class APIAgenciaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AgenciaApplication.class, args);
+		SpringApplication.run(APIAgenciaApplication.class, args);
+
+
 	}
 
 }

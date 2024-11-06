@@ -1,10 +1,13 @@
 package com.tpi.agencia.dtos;
 
+import com.tpi.agencia.models.Interesado;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
+@AllArgsConstructor
 public class InteresadoDto {
     private Integer id;
     private String tipoDocumento;
@@ -13,6 +16,16 @@ public class InteresadoDto {
     private String apellido;
     private Boolean restringido;
     private Integer nroLicencia;
-    private Date fechaVencimientoLicencia;
+    private Date fechaVtoLicencia;
 
+    public InteresadoDto(Interesado interesado) {
+        this.id = interesado.getId();
+        this.tipoDocumento = interesado.getTipoDocumento();
+        this.documento = interesado.getDocumento();
+        this.nombre = interesado.getNombre();
+        this.apellido = interesado.getApellido();
+        this.restringido = interesado.getRestringido();
+        this.nroLicencia = interesado.getNroLicencia();
+        this.fechaVtoLicencia = interesado.getFechaVtoLicencia();
+    }
 }

@@ -37,14 +37,19 @@ public class PruebaController {
         return ResponseEntity.ok(service.findAll());
     }
 
-    // Obtener prueba por ID
+    // Obtener prueba por id
     @GetMapping("/{id}")
     public ResponseEntity<?> getPruebaById(@PathVariable Integer id) {
         try {
             PruebaDto found = service.findById(id);
             return ResponseEntity.ok(found);
         } catch (ServiceException e) {
-            return createErrorResponse(HttpStatus.NOT_FOUND, "Not Found", e.getMessage());
+            ErrorResponse errorResponse = new ErrorResponse(
+                    HttpStatus.NOT_FOUND.value(),
+                    "Not Found",
+                    e.getMessage()
+            );
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
 
@@ -52,61 +57,75 @@ public class PruebaController {
     @GetMapping("/en-curso")
     public ResponseEntity<List<PruebaDto>> getPruebasEnCurso() {
         List<PruebaDto> pruebas = service.getPruebasEnCurso();
-        return pruebas.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(pruebas);
+
+        if (pruebas.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(pruebas);
     }
 
-    // Crear una prueba
+    // crear una prueba
     @PostMapping("/new")
     public ResponseEntity<?> create(@RequestBody PruebaDto prueba) {
         try {
             PruebaDto nuevaPrueba = service.create(prueba);
-            return ResponseEntity.status(HttpStatus.CREATED).body(nuevaPrueba);
+            return ResponseEntity.ok(nuevaPrueba);
         } catch (IllegalArgumentException e) {
-            return createErrorResponse(HttpStatus.BAD_REQUEST, "Bad Request", e.getMessage());
+            ErrorResponse errorResponse = new ErrorResponse(
+                    HttpStatus.BAD_REQUEST.value(),
+                    "Bad Request",
+                    e.getMessage()
+            );
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
     }
 
-    // Modificar una prueba
+    // modificar una prueba
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePrueba(@PathVariable Integer id, @RequestBody PruebaDto pruebaDto) {
         try {
             PruebaDto updatedPrueba = service.updatePrueba(id, pruebaDto);
             return ResponseEntity.ok(updatedPrueba);
         } catch (IllegalArgumentException e) {
-            return createErrorResponse(HttpStatus.BAD_REQUEST, "Bad Request", e.getMessage());
+            ErrorResponse errorResponse = new ErrorResponse(
+                    HttpStatus.BAD_REQUEST.value(),
+                    "Bad Request",
+                    e.getMessage()
+            );
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
     }
 
-    // Finalizar una prueba
     @PutMapping("/finalizar/{id}")
     public ResponseEntity<?> finalizarPrueba(@PathVariable Integer id, @RequestBody PruebaDto pruebaDto) {
         try {
             Prueba updatedPrueba = service.finalizarPrueba(id, pruebaDto.getComentarios());
             return ResponseEntity.ok(updatedPrueba);
         } catch (IllegalArgumentException e) {
-            return createErrorResponse(HttpStatus.BAD_REQUEST, "Bad Request", e.getMessage());
+            ErrorResponse errorResponse = new ErrorResponse(
+                    HttpStatus.BAD_REQUEST.value(),
+                    "Bad Request",
+                    e.getMessage()
+            );
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
     }
 
-    // Borrar una prueba
+    // borrar una prueba
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePrueba(@PathVariable Integer id) {
         try {
             service.deletePrueba(id);
             return ResponseEntity.noContent().build();
         } catch (IllegalArgumentException e) {
-            return createErrorResponse(HttpStatus.NOT_FOUND, "Not Found", e.getMessage());
+            ErrorResponse errorResponse = new ErrorResponse(
+                    HttpStatus.NOT_FOUND.value(),
+                    "Not Found",
+                    e.getMessage()
+            );
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
 
-    // Método auxiliar para construir una respuesta de error
-    private ResponseEntity<ErrorResponse> createErrorResponse(HttpStatus status, String error, String message) {
-        ErrorResponse errorResponse = new ErrorResponse(
-                status.value(),
-                error,
-                message
-        );
-        return ResponseEntity.status(status).body(errorResponse);
-    }
 }
-
