@@ -1,6 +1,7 @@
 package com.tpi.agencia.services;
 
 import com.tpi.agencia.dtos.PruebaDto;
+import com.tpi.agencia.dtos.expertos.NotificacionRadioExcedidoDto;
 import com.tpi.agencia.dtos.report.response.DistanciaVehiculoResponse;
 import com.tpi.agencia.models.Posicion;
 import com.tpi.agencia.models.Prueba;
@@ -59,6 +60,14 @@ public class ReporteService {
         Double dX = lat2 - lat1;
         Double dY = lon2 - lon2;
         return Math.sqrt(dX * dX + dY * dY);
+    }
+
+    private PruebaDto buscarPruebaDeNotificacion(NotificacionRadioExcedidoDto notificacion) {
+        System.out.println(notificacion.getIdVehiculo());
+        System.out.println(notificacion.getFechaNotificacion());
+        Prueba prueba = pruebaRepository.findPruebaByVehiculoIdAndFechaNotificacion(notificacion.getIdVehiculo(), notificacion.getFechaNotificacion());
+        System.out.println(prueba);
+        return new PruebaDto(prueba);
     }
 
     public Iterable<Prueba> getAll() { return pruebaRepository.findAll(); }
