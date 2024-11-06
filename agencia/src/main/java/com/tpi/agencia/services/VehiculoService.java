@@ -23,7 +23,7 @@ public class VehiculoService {
     private final KafkaProducer kafkaProducer;
 
     @Autowired
-    public VehiculoService(RestriccionesService restriccionesService, VehiculoRepository vehiculoRepository, PruebaRepository pruebaRepository, PosicionRepository posicionRepository, KafkaProducer kafkaProducer) {
+    public VehiculoService(RestriccionesService restriccionesService, VehiculoRepository vehiculoRepository, PruebaRepository pruebaRepository, PosicionesRepository posicionesRepository, KafkaProducer kafkaProducer) {
         this.restriccionesService = restriccionesService;
         this.vehiculoRepository = vehiculoRepository;
         this.pruebaRepository = pruebaRepository;
