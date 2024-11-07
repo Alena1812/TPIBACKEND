@@ -6,19 +6,31 @@ import lombok.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter @Setter @NoArgsConstructor @ToString @AllArgsConstructor @EqualsAndHashCode
 @Entity
 @Table(name = "Modelos")
-@Data
 public class Modelo {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String descripcion;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "ID_MARCA")
     private Marca marca;
 
-    @OneToMany(mappedBy = "modelo")
-    private Set<Vehiculo> vehiculos = new HashSet<>();
+    private String descripcion;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "modelo", cascade = CascadeType.PERSIST)
+    private Set<Vehiculo> vehiculos;
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+        if (marca != null) {
+            marca.getModelos().add(this);
+        }
+    }
 }

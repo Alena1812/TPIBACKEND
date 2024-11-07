@@ -12,6 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @ToString
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Notificacion {
 
     // Atributos
@@ -21,12 +22,12 @@ public abstract class Notificacion {
 
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime fechaNotificacion;
-    private String mensaje;
+    private String texto;
 
     // Constructor
-    public Notificacion(Integer id, LocalDateTime fechaNotificacion, String mensaje) {
+    public Notificacion(Integer id, LocalDateTime fechaNotificacion, String texto) {
         this.id = id;
         this.fechaNotificacion = fechaNotificacion;
-        this.mensaje = mensaje;
+        this.texto = texto;
     }
 }

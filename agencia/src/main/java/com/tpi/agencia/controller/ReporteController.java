@@ -25,6 +25,8 @@ public class ReporteController {
     private final ReporteService service;
     private final ReporteService reporteService;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+    //inyeccion de dependencias
     @Autowired
     public ReporteController(ReporteService service, ReporteService reporteService) { this.service = service;
         this.reporteService = reporteService;
@@ -70,6 +72,21 @@ public class ReporteController {
                     HttpStatus.BAD_REQUEST.value(),
                     "Bad Request",
                     e.getMessage()
+            );
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
+    }
+
+    @GetMapping("/incidentes/{idEmpleado}")
+    public ResponseEntity<?> obtenerIncidentesEmpleado(@PathVariable Integer idEmpleado) {
+        try {
+            List<PruebaDto> pruebas = reporteService.obtenerIncidentesEmpleado(idEmpleado);
+            return ResponseEntity.ok(pruebas);
+        } catch (RuntimeException e) {
+            ErrorResponse errorResponse = new ErrorResponse(
+                    HttpStatus.BAD_REQUEST.value(),
+                    "Bad Request",
+                    "Error al obtener el reporte de incidentes del empleado con el ID: " + idEmpleado + " " +  e.getMessage()
             );
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }

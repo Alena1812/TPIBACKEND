@@ -1,23 +1,24 @@
 package com.tpi.agencia.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Getter @Setter @NoArgsConstructor @ToString @AllArgsConstructor @EqualsAndHashCode
 @Entity
 @Table(name = "Marcas")
-@Data
 public class Marca {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String nombre;
 
-    @OneToMany(mappedBy = "marca")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "marca", cascade = CascadeType.PERSIST)
     private Set<Modelo> modelos = new HashSet<>();
 
 }

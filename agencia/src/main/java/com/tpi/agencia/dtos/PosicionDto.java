@@ -1,11 +1,20 @@
 package com.tpi.agencia.dtos;
 
+import lombok.Data;
+
 import java.util.Date;
 
+@Data
 public class PosicionDto {
-    private Integer id;
-    private Date fechaHora;
-    private Double latitud;
-    private Double longitud;
-    private Integer idVehiculo;
+    private int id;
+    private VehiculoDto vehiculo;
+    private Coordenadas coordenadas;
+    private String mensaje;
+
+    @Data
+    public static class Coordenadas {
+        private double lat;
+        private double lon;
+    }
+
 }

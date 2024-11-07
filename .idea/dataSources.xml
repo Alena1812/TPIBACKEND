@@ -19,17 +19,5 @@
         </library>
       </libraries>
     </data-source>
-    <data-source source="LOCAL" name="agencia.db" uuid="9bb1300f-b402-4e1d-a89f-eaad2fbf96dd">
-      <driver-ref>sqlite.xerial</driver-ref>
-      <synchronize>true</synchronize>
-      <imported>true</imported>
-      <remarks>$PROJECT_DIR$/notificaciones/src/main/resources/application.properties</remarks>
-      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/../../../../Admin/OneDriveUTN/Escritorio/TPIBACKEND/agencia.db</jdbc-url>
-      <jdbc-additional-properties>
-        <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
-      </jdbc-additional-properties>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
   </component>
 </project>
