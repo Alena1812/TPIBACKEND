@@ -13,18 +13,21 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReporteService {
     private final PruebaRepository pruebaRepository;
     private final PosicionesRepository posicionesRepository;
     private final VehiculoRepository vehiculoRepository;
+    private final RestriccionesService restriccionesService;
 
     @Autowired
-    public ReporteService(PruebaRepository pruebaRepository, PosicionesRepository posicionesRepository, VehiculoRepository vehiculoRepository) {
+    public ReporteService(PruebaRepository pruebaRepository, PosicionesRepository posicionesRepository, VehiculoRepository vehiculoRepository, RestriccionesService restriccionesService) {
         this.pruebaRepository = pruebaRepository;
         this.posicionesRepository = posicionesRepository;
         this.vehiculoRepository = vehiculoRepository;
+        this.restriccionesService = restriccionesService;
     }
 
     public DistanciaVehiculoResponse calcularDistanciaRecorrida(Integer idVehiculo, Date inicio, Date fin) {
@@ -68,6 +71,19 @@ public class ReporteService {
         Prueba prueba = pruebaRepository.findPruebaByVehiculoIdAndFechaNotificacion(notificacion.getIdVehiculo(), notificacion.getFechaNotificacion());
         System.out.println(prueba);
         return new PruebaDto(prueba);
+    }
+
+    private PruebaDto buscarPruebaDeNotificacionEmpleado(NotificacionRadioExcedidoDto notificacion, Integer idEmpleado) {
+        Prueba prueba = pruebaRepository.findPruebaByVehiculoIdAndFechaNotificacionAndEmpleado(notificacion.getIdVehiculo(), notificacion.getFechaNotificacion(), idEmpleado);
+        return new PruebaDto(prueba);
+    }
+
+    public List<PruebaDto> obtenerIncidentesEmpleado(Integer idEmpleado) {
+        List<NotificacionRadioExcedidoDto> notificaciones = restriccionesService.getNotificacionesRadioExcedido();
+
+        return notificaciones.stream()
+                .map(notificacion -> buscarPruebaDeNotificacionEmpleado(notificacion, idEmpleado))
+                .collect(Collectors.toList());
     }
 
     public Iterable<Prueba> getAll() { return pruebaRepository.findAll(); }

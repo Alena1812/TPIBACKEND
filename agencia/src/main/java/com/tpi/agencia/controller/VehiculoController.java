@@ -17,6 +17,7 @@ public class VehiculoController {
 
     private final VehiculoService service;
 
+    //inyeccion de dependencias
     @Autowired
     public VehiculoController(VehiculoService service) {
         this.service = service;

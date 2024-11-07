@@ -26,7 +26,7 @@ import java.util.List;
 public class PruebaController {
     private final PruebaService service;
 
-    @Autowired
+    //inyeccion de dependencias    @Autowired
     public PruebaController(PruebaService service) {
         this.service = service;
     }
