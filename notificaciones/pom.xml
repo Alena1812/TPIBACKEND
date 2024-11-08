@@ -70,12 +70,14 @@
 			<version>3.42.0.0</version>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- Lombok (solo debe haber una declaración) -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.24</version> <!-- O la última versión estable -->
 			<scope>provided</scope>
 		</dependency>
+		<!-- Spring Boot Starter Test (solo debe haber una declaración) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -91,33 +93,21 @@
 			<artifactId>hibernate-community-dialects</artifactId>
 			<version>6.5.2.Final</version>
 		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
+
 
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.3.1</version>
 				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
+					<encoding>UTF-8</encoding> <!-- Asegúrate de que la codificación sea UTF-8 -->
 				</configuration>
 			</plugin>
 		</plugins>
 	</build>
+
 
 </project>
