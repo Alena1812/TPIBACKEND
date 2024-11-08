@@ -75,7 +75,7 @@ public class GWConfig {
         return http.build();
     }
 
-
+/*
     @Bean
     public ReactiveJwtAuthenticationConverter jwtAuthenticationConverter() {
         var jwtAuthenticationConverter = new ReactiveJwtAuthenticationConverter();
@@ -90,7 +90,7 @@ public class GWConfig {
                 new ReactiveJwtGrantedAuthoritiesConverterAdapter(grantedAuthoritiesConverter));
         return jwtAuthenticationConverter;
     }
-
+*/
     @Bean
     public ReactiveJwtDecoder jwtDecoder() {
         // Esta es la dirección donde tu aplicación encuentra las "llaves" para leer los JWT
