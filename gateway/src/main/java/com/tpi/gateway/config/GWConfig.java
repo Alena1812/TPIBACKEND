@@ -13,6 +13,9 @@ import org.springframework.security.oauth2.server.resource.authentication.Reacti
 import org.springframework.security.oauth2.server.resource.authentication.ReactiveJwtGrantedAuthoritiesConverterAdapter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
+import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusReactiveJwtDecoder;
+
 @Configuration
 @EnableWebFluxSecurity
 public class GWConfig {
@@ -72,7 +75,7 @@ public class GWConfig {
         return http.build();
     }
 
-
+/*
     @Bean
     public ReactiveJwtAuthenticationConverter jwtAuthenticationConverter() {
         var jwtAuthenticationConverter = new ReactiveJwtAuthenticationConverter();
@@ -86,6 +89,13 @@ public class GWConfig {
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(
                 new ReactiveJwtGrantedAuthoritiesConverterAdapter(grantedAuthoritiesConverter));
         return jwtAuthenticationConverter;
+    }
+*/
+    @Bean
+    public ReactiveJwtDecoder jwtDecoder() {
+        // Esta es la dirección donde tu aplicación encuentra las "llaves" para leer los JWT
+        String jwkSetUri = "C:\\Users\\ignal\\OneDrive\\Escritorio\\TPIBACKEND\\agencia.db";
+        return NimbusReactiveJwtDecoder.withJwkSetUri(jwkSetUri).build();
     }
 
 
