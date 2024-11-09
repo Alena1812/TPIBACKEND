@@ -7,10 +7,9 @@ import com.tpi.agencia.models.Vehiculo;
 import com.tpi.agencia.repositories.PosicionesRepository;
 import com.tpi.agencia.repositories.PruebaRepository;
 import com.tpi.agencia.repositories.VehiculoRepository;
-import com.tpi.agencia.services.KafkaProducer;
-import com.tpi.agencia.services.RestriccionesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.tpi.agencia.services.NotificacionService;
 
 import java.util.Date;
 
@@ -20,15 +19,14 @@ public class VehiculoService {
     private final VehiculoRepository vehiculoRepository;
     private final PruebaRepository pruebaRepository;
     private final PosicionesRepository posicionesRepository;
-    private final KafkaProducer kafkaProducer;
+    private NotificacionService notificacionService;
 
     @Autowired
-    public VehiculoService(RestriccionesService restriccionesService, VehiculoRepository vehiculoRepository, PruebaRepository pruebaRepository, PosicionesRepository posicionesRepository, KafkaProducer kafkaProducer) {
+    public VehiculoService(RestriccionesService restriccionesService, VehiculoRepository vehiculoRepository, PruebaRepository pruebaRepository, PosicionesRepository posicionesRepository, NotificacionService kafkaProducer) {
         this.restriccionesService = restriccionesService;
         this.vehiculoRepository = vehiculoRepository;
         this.pruebaRepository = pruebaRepository;
         this.posicionesRepository = posicionesRepository;
-        this.kafkaProducer = kafkaProducer;
     }
 
     public PosicionDto procesarPosicion(PosicionDto posicionDto){
@@ -50,14 +48,14 @@ public class VehiculoService {
         if (estaPosicionFueraRadioAdmitido(posicionRespuesta, restricciones)){
             posicionRespuesta.setMensaje("La posicion actual del vehiculo se encuentra por fuera del radio permitido por la agencia.");
             // trigger notification.
-            kafkaProducer.enviarMensajeRadioExcedido(posicionRespuesta);
+            notificacionService.enviarMensajeRadioExcedido(posicionRespuesta);
             return posicionRespuesta;
         }
 
         if (estaEnZonaRestringida(posicionRespuesta, restricciones)){
             posicionRespuesta.setMensaje("La posicion actual del vehiculo se encuentra dentro de un area restringida.");
             // trigger notification.
-            kafkaProducer.enviarMensajeZonaPeligrosa(posicionRespuesta);
+            notificacionService.enviarMensajeZonaPeligrosa(posicionRespuesta);
             return posicionRespuesta;
         }
 
@@ -122,5 +120,4 @@ public class VehiculoService {
                     && lonVehiculo >= lonNoroeste && lonVehiculo <= lonSureste;
         });
     }
-
 }

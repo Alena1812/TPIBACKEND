@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public abstract class NotificacionDto {
+public class NotificacionDto {
     private Integer id;
     private List<String> reciverEmails;
     private LocalDateTime fechaNotificacion;
