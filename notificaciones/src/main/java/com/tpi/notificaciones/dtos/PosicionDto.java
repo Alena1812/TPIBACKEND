@@ -3,7 +3,7 @@ package com.tpi.notificaciones.dtos;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.tpi.notificaciones.service.PosicionDtoDataDeserializer;
+import com.tpi.notificaciones.service.PosicionDtoDeserializer;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
