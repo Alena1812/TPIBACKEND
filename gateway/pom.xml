@@ -5,13 +5,13 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.4</version>
+		<version>3.1.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.tpi</groupId>
 	<artifactId>gateway</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>API Gateway - Agencia de Venta de Vehiculos</name>
+	<name>API Gateway</name>
 	<description>API Gateway en SpringBoot para el proyecto integrador de Backend</description>
 	<url/>
 	<licenses>
@@ -34,6 +34,7 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-gateway</artifactId>
+			<version>4.1.5</version>
 		</dependency>
 
 		<dependency>
@@ -43,15 +44,8 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-oauth2-jose</artifactId>
+			<version>6.3.4</version>
 		</dependency>
-		<!-- SQLite Dependency -->
-		<!--		<dependency>-->
-		<!--			<groupId>org.xerial</groupId>-->
-		<!--			<artifactId>sqlite-jdbc</artifactId>-->
-		<!--			<version>3.40.0.0</version>-->
-		<!--			<scope>runtime</scope>-->
-		<!--		</dependency>-->
-
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -63,14 +57,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-task</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-function-web</artifactId>
-		</dependency>
 
 	</dependencies>
 
@@ -79,7 +65,7 @@
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>2022.0.4</version> <!-- O ajusta la versión según la versión de Spring Boot que estés usando -->
+				<version>${spring-cloud.version}</version> <!-- O ajusta la versión según la versión de Spring Boot que estés usando -->
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
