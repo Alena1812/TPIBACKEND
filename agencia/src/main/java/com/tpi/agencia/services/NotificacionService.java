@@ -1,7 +1,7 @@
 package com.tpi.agencia.services;
 
 import com.tpi.agencia.dtos.PosicionDto;
-import com.tpi.agencia.dtos.expertos.NotificacionDto;
+import com.tpi.agencia.dtos.externos.NotificacionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;

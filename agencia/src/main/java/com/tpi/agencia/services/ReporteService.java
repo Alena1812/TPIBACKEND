@@ -1,7 +1,7 @@
 package com.tpi.agencia.services;
 
 import com.tpi.agencia.dtos.PruebaDto;
-import com.tpi.agencia.dtos.expertos.NotificacionRadioExcedidoDto;
+import com.tpi.agencia.dtos.externos.NotificacionRadioExcedidoDto;
 import com.tpi.agencia.dtos.report.response.DistanciaVehiculoResponse;
 import com.tpi.agencia.models.Posicion;
 import com.tpi.agencia.models.Prueba;

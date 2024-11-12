@@ -1,7 +1,7 @@
 package com.tpi.agencia.services;
 
 import com.tpi.agencia.dtos.RestriccionesDto;
-import com.tpi.agencia.dtos.expertos.NotificacionRadioExcedidoDto;
+import com.tpi.agencia.dtos.externos.NotificacionRadioExcedidoDto;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

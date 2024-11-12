@@ -1,4 +1,4 @@
-package com.tpi.agencia.dtos.expertos;
+package com.tpi.agencia.dtos.externos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
