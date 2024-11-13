@@ -1,6 +1,7 @@
 package com.tpi.notificaciones.controllers;
 
 import com.tpi.notificaciones.dtos.NotificacionPromocionDto;
+import com.tpi.notificaciones.dtos.NotificacionRadioDto;
 import com.tpi.notificaciones.dtos.PosicionDto;
 import com.tpi.notificaciones.models.Notificacion;
 import com.tpi.notificaciones.service.NotificacionService;
@@ -18,16 +19,16 @@ public class NotificacionController {
     public NotificacionController(NotificacionService service) {this.notificacionService = service;}
 
     // Guardar notificacion por radio excedido
-    @PostMapping("/seguridad/radio-excedido/new")
-    public ResponseEntity<?> notificaRadioExcedido(@RequestBody PosicionDto radioExcedido) {
-        // Verifica que el objeto recibido no sea null y tenga datos
-        if (radioExcedido == null || radioExcedido.getCoordenadas() == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("Las coordenadas no fueron enviadas correctamente.");
-        }
-
-        return ResponseEntity.ok(notificacionService.createRadio(radioExcedido));
-    }
+//    @PostMapping("/seguridad/radio-excedido/new")
+//    public ResponseEntity<?> notificaRadioExcedido(@RequestBody NotificacionRadioDto radioExcedido) {
+//        // Verifica que el objeto recibido no sea null y tenga datos
+//        if (radioExcedido == null || radioExcedido.get() == null) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+//                    .body("Las coordenadas no fueron enviadas correctamente.");
+//        }
+//
+//        return ResponseEntity.ok(notificacionService.createRadio(radioExcedido));
+//    }
 
 
     // Guardar notificacion por zona peligrosa

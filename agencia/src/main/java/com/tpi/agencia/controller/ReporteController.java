@@ -37,10 +37,22 @@ public class ReporteController {
             @RequestParam("fechaDesde") String fechaDesde,
             @RequestParam("fechaHasta") String fechaHasta) {
         try {
+            // Definir el formato de la fecha
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            // Convertir las fechas desde String (yyyy-MM-dd) a objetos Date
             Date desde = dateFormat.parse(fechaDesde);
             Date hasta = dateFormat.parse(fechaHasta);
 
-            DistanciaVehiculoResponse response = reporteService.calcularDistanciaRecorrida(idVehiculo, desde, hasta);
+            // Obtener los timestamps en milisegundos
+            long desdeMillis = desde.getTime();
+            long hastaMillis = hasta.getTime();
+
+            // Crear objetos Date con los timestamps
+            Date desdeDate = new Date(desdeMillis);
+            Date hastaDate = new Date(hastaMillis);
+
+            DistanciaVehiculoResponse response = reporteService.calcularDistanciaRecorrida(idVehiculo, desdeDate, hastaDate);
             return ResponseEntity.ok(response);
         } catch (ParseException e) {
             ErrorResponse errorResponse = new ErrorResponse(

@@ -91,7 +91,7 @@ public class ReporteService {
         try {
             // Intenta obtener las notificaciones
             List<NotificacionRadioExcedidoDto> notificaciones = restriccionesService.getNotificacionesRadioExcedido();
-
+            System.out.println(notificaciones);
             // Si no hay notificaciones, puedes devolver una lista vacía o lanzar una excepción
             if (notificaciones == null || notificaciones.isEmpty()) {
                 throw new RuntimeException("No se encontraron notificaciones para procesar.");
