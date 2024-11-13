@@ -12,19 +12,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PosicionDto {
     private Integer id;
-    private VehiculoDto vehiculoDto;
-    @Getter
+    private VehiculoDto vehiculo;
     private Coordenadas coordenadas;
     private String texto;
 
     @JsonCreator
     public PosicionDto(
             @JsonProperty("id") Integer id,
-            @JsonProperty("vehiculoDto") VehiculoDto vehiculoDto,
+            @JsonProperty("vehiculoDto") VehiculoDto vehiculo,
             @JsonProperty("coordenadas") Coordenadas coordenadas,
             @JsonProperty("texto") String texto) {
                 this.id = id;
-                this.vehiculoDto= vehiculoDto;
+                this.vehiculo= vehiculo;
                 this.coordenadas = coordenadas;
                 this.texto = texto;
     }

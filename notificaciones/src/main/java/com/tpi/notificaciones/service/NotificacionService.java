@@ -70,8 +70,8 @@ public class NotificacionService {
 
     private NotificacionPromocion buildNotificacionPromocionFromDto(NotificacionPromocionDto promocionDto) {
         NotificacionPromocion promocion = new NotificacionPromocion();
-        promocion.setCodigoPromocion(promocionDto.getCodigo());
-        promocion.setFechaNotificacion(promocionDto.getFechaNotificacion());
+        promocion.setFechaNotificacion(LocalDateTime.now());
+        promocion.setCodigoPromocion(promocionDto.getCodigoPromocion());
         promocion.setTexto(promocionDto.getTexto());
         promocion.setFechaExpiracion(promocionDto.getFechaExpiracion());
         return promocion;
@@ -82,7 +82,7 @@ public class NotificacionService {
         radioExcedido.setFechaNotificacion(LocalDateTime.now());
         radioExcedido.setLatitud(posicion.getCoordenadas().getLatitud());
         radioExcedido.setLongitud(posicion.getCoordenadas().getLongitud());
-        radioExcedido.setIdVehiculo(posicion.getVehiculoDto().getId());
+        radioExcedido.setIdVehiculo(posicion.getVehiculo().getId());
         radioExcedido.setTexto(posicion.getTexto());
         return radioExcedido;
     }
@@ -93,7 +93,7 @@ public class NotificacionService {
         zonaPeligrosa.setNivelPeligro("ALTO");
         zonaPeligrosa.setLatitud(posicion.getCoordenadas().getLatitud());
         zonaPeligrosa.setLongitud(posicion.getCoordenadas().getLongitud());
-        zonaPeligrosa.setIdVehiculo(posicion.getVehiculoDto().getId());
+        zonaPeligrosa.setIdVehiculo(posicion.getVehiculo().getId());
         zonaPeligrosa.setTexto(posicion.getTexto());
         return zonaPeligrosa;
     }

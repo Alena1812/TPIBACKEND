@@ -26,7 +26,7 @@ public class RestriccionesService {
         return restTemplate.getForObject(urlRestricciones, RestriccionesDto.class);
     }
     public List<NotificacionRadioExcedidoDto> getNotificacionesRadioExcedido() {
-        NotificacionRadioExcedidoDto[] notificacionesArray = restTemplate.getForObject(urlNotificaciones + "/notificaciones/seguridad/radio", NotificacionRadioExcedidoDto[].class);
+        NotificacionRadioExcedidoDto[] notificacionesArray = restTemplate.getForObject(urlNotificaciones + "/notificaciones/notificaciones/seguridad/radio-excedido/new", NotificacionRadioExcedidoDto[].class);
         return Arrays.asList(notificacionesArray);
     }
 }

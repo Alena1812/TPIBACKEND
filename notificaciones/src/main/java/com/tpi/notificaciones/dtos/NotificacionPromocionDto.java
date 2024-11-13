@@ -10,14 +10,16 @@ import java.time.LocalDate;
 @EqualsAndHashCode(callSuper = true)
 
 public class NotificacionPromocionDto extends NotificacionDto{
-    private String codigo;
+    private String codigoPromocion;
     private LocalDate fechaExpiracion;
 
-    public NotificacionPromocionDto() {}
+    public NotificacionPromocionDto() {
+        super(); // Esto llamará al constructor sin argumentos de NotificacionDto
+    }
 
     public NotificacionPromocionDto(NotificacionPromocion notificacion) {
-        super(notificacion.getId(), notificacion.getFechaNotificacion(), notificacion.getTexto());
-        this.codigo = notificacion.getCodigoPromocion();
+        super(notificacion.getId(), notificacion.getTexto());
+        this.codigoPromocion = notificacion.getCodigoPromocion();
         this.fechaExpiracion = notificacion.getFechaExpiracion();
     }
 }

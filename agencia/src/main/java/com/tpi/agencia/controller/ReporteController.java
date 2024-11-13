@@ -89,7 +89,7 @@ public class ReporteController {
                     "Bad Request",
                     "Error al obtener el reporte de incidentes: " + e.getMessage()
             );
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
     }
 

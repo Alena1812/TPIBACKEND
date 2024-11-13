@@ -11,13 +11,12 @@ import java.util.List;
 @NoArgsConstructor
 public abstract class NotificacionDto {
     private Integer id;
-    private List<String> emails;
     private LocalDateTime fechaNotificacion;
     private String texto;
 
-    public NotificacionDto(Integer id, LocalDateTime fechaNotificacion, String texto) {
+    public NotificacionDto(Integer id, String texto) {
         this.id = id;
-        this.fechaNotificacion = fechaNotificacion;
+        this.fechaNotificacion = LocalDateTime.now();
         this.texto = texto;
     }
 }

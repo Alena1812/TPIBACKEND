@@ -1,4 +1,5 @@
 package com.tpi.notificaciones.models;
+import com.tpi.notificaciones.dtos.PosicionDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
@@ -21,16 +22,16 @@ public class NotificacionRadio extends Notificacion {
     private Integer idVehiculo;
 
     //Constructor
-    public NotificacionRadio(double latitud, double longitud, Integer idVehiculo) {
-        this.latitud = latitud;
-        this.longitud = longitud;
+    public NotificacionRadio(PosicionDto posicion, Integer idVehiculo) {
+        this.latitud = posicion.getCoordenadas().getLatitud();
+        this.longitud = posicion.getCoordenadas().getLongitud();
         this.idVehiculo = idVehiculo;
     }
 
-    public NotificacionRadio(Integer id, LocalDateTime fechaNotificacion, String texto, double latitud, double longitud, Integer idVehiculo) {
+    public NotificacionRadio(Integer id, LocalDateTime fechaNotificacion, String texto, PosicionDto posicion, Integer idVehiculo) {
         super(id, fechaNotificacion, texto);
-        this.latitud = latitud;
-        this.longitud = longitud;
+        this.latitud = posicion.getCoordenadas().getLatitud();
+        this.longitud = posicion.getCoordenadas().getLongitud();
         this.idVehiculo = idVehiculo;
     }
 }

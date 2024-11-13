@@ -22,11 +22,12 @@ public class VehiculoService {
     private NotificacionService notificacionService;
 
     @Autowired
-    public VehiculoService(RestriccionesService restriccionesService, VehiculoRepository vehiculoRepository, PruebaRepository pruebaRepository, PosicionesRepository posicionesRepository, NotificacionService kafkaProducer) {
+    public VehiculoService(RestriccionesService restriccionesService, VehiculoRepository vehiculoRepository, PruebaRepository pruebaRepository, PosicionesRepository posicionesRepository, NotificacionService notificacionService) {
         this.restriccionesService = restriccionesService;
         this.vehiculoRepository = vehiculoRepository;
         this.pruebaRepository = pruebaRepository;
         this.posicionesRepository = posicionesRepository;
+        this.notificacionService = notificacionService;
     }
 
     public PosicionDto procesarPosicion(PosicionDto posicionDto){

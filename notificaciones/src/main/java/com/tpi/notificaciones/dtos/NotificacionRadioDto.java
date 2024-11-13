@@ -12,7 +12,7 @@ public class NotificacionRadioDto extends NotificacionDto{
     private Integer idVehiculo;
 
     public NotificacionRadioDto(NotificacionRadio notificacionRadio){
-        super(notificacionRadio.getId(), notificacionRadio.getFechaNotificacion(), notificacionRadio.getTexto());
+        super(notificacionRadio.getId(), notificacionRadio.getTexto());
         this.latitud = notificacionRadio.getLatitud();
         this.longitud = notificacionRadio.getLongitud();
         this.idVehiculo = notificacionRadio.getIdVehiculo();
