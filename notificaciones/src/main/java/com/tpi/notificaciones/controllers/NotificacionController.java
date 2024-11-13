@@ -8,11 +8,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/notificaciones")
-    public class NotificacionController {
-private final NotificacionService notificacionService;
+public class NotificacionController {
+    private final NotificacionService notificacionService;
 
-@Autowired
-public NotificacionController(NotificacionService service) {this.notificacionService = service;}
+    @Autowired
+    public NotificacionController(NotificacionService service) {this.notificacionService = service;}
+
     @PostMapping("/promocion/new")
     public ResponseEntity<?> notificarPromocion(
             @RequestBody NotificacionPromocionDto promocion) {

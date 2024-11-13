@@ -4,6 +4,7 @@ import com.tpi.agencia.dtos.ErrorResponse;
 import com.tpi.agencia.dtos.PruebaDto;
 import com.tpi.agencia.dtos.report.response.DistanciaVehiculoResponse;
 import com.tpi.agencia.dtos.report.response.IncidentesResponse;
+import com.tpi.agencia.dtos.report.response.IncidentesXEmpleado;
 import com.tpi.agencia.dtos.report.response.PruebasResponse;
 import com.tpi.agencia.services.ReporteService;
 import com.tpi.agencia.services.RestriccionesService;
@@ -96,7 +97,8 @@ public class ReporteController {
     public ResponseEntity<?> obtenerIncidentesEmpleado(@PathVariable Integer idEmpleado) {
         try {
             List<PruebaDto> pruebas = reporteService.obtenerIncidentesEmpleado(idEmpleado);
-            return ResponseEntity.ok(pruebas);
+            IncidentesXEmpleado response = new IncidentesXEmpleado(idEmpleado, pruebas);
+            return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             ErrorResponse errorResponse = new ErrorResponse(
                     HttpStatus.BAD_REQUEST.value(),

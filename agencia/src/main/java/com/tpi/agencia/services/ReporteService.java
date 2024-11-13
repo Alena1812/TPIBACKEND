@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.tpi.agencia.services.RestriccionesService;
 
+
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -62,7 +63,7 @@ public class ReporteService {
 
     private Double calcularDistanciaEuclidea(Double lat1, Double lon1, Double lat2, Double lon2) {
         Double dX = lat2 - lat1;
-        Double dY = lon2 - lon2;
+        Double dY = lon2 - lon1;
         return Math.sqrt(dX * dX + dY * dY);
     }
 

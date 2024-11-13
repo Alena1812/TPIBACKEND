@@ -18,7 +18,7 @@ public class RestriccionesService {
     @Value("${tpi-agencia.microservicio-restricciones.url}")
     private String urlRestricciones;
 
-    @Value("${tpi-agencia.microservicio-notificaciones.url")
+    @Value("${tpi-agencia.microservicio-notificaciones.url}")
     private String urlNotificaciones;
 
     @Cacheable("restrictionsApiCache")
