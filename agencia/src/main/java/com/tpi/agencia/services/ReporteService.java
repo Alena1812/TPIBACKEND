@@ -10,6 +10,7 @@ import com.tpi.agencia.repositories.PosicionesRepository;
 import com.tpi.agencia.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.tpi.agencia.services.RestriccionesService;
 
 import java.util.Date;
 import java.util.List;
@@ -85,9 +86,14 @@ public class ReporteService {
                 .map(notificacion -> buscarPruebaDeNotificacionEmpleado(notificacion, idEmpleado))
                 .collect(Collectors.toList());
     }
+    public List<PruebaDto> obtenerIncidentes() {
+        List<NotificacionRadioExcedidoDto> notificaciones = restriccionesService.getNotificacionesRadioExcedido();
+
+        return notificaciones.stream()
+                .map(this::buscarPruebaDeNotificacion)
+                .collect(Collectors.toList());
+    }
 
     public Iterable<Prueba> getAll() { return pruebaRepository.findAll(); }
-
-
 
 }

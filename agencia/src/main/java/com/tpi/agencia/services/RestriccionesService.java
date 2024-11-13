@@ -18,7 +18,7 @@ public class RestriccionesService {
     @Value("${tpi-agencia.microservicio-restricciones.url}")
     private String urlRestricciones;
 
-    @Value("${tpi-agencia.microservicio-notificaciones.url}")
+    @Value("${tpi-agencia.microservicio-notificaciones.url")
     private String urlNotificaciones;
 
     @Cacheable("restrictionsApiCache")
@@ -26,7 +26,7 @@ public class RestriccionesService {
         return restTemplate.getForObject(urlRestricciones, RestriccionesDto.class);
     }
     public List<NotificacionRadioExcedidoDto> getNotificacionesRadioExcedido() {
-        NotificacionRadioExcedidoDto[] notificacionesArray = restTemplate.getForObject(urlNotificaciones + "/notificaciones/seguridad/radio-excedido", NotificacionRadioExcedidoDto[].class);
+        NotificacionRadioExcedidoDto[] notificacionesArray = restTemplate.getForObject(urlNotificaciones + "/notificaciones/seguridad/radio", NotificacionRadioExcedidoDto[].class);
         return Arrays.asList(notificacionesArray);
     }
 }

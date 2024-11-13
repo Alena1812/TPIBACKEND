@@ -107,7 +107,6 @@ public class PruebaService {
         return interesado;
     }
 
-
     private Prueba buildPruebaFromDto(PruebaDto pruebaDto) {
         Vehiculo vehiculo = validarVehiculoDisponible(pruebaDto.getVehiculo().getId());
         Interesado interesado = validarInteresado(pruebaDto.getInteresado().getId());

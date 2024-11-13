@@ -26,5 +26,4 @@ public class PruebaDto {
         this.fechaHoraFin = prueba.getFechaHoraFin();
         this.comentarios = prueba.getComentarios();
     }
-
 }

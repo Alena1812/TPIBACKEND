@@ -1,13 +1,12 @@
 package com.tpi.agencia.controller;
 
-
-
 import com.tpi.agencia.dtos.ErrorResponse;
 import com.tpi.agencia.dtos.PruebaDto;
 import com.tpi.agencia.dtos.report.response.DistanciaVehiculoResponse;
+import com.tpi.agencia.dtos.report.response.IncidentesResponse;
 import com.tpi.agencia.dtos.report.response.PruebasResponse;
 import com.tpi.agencia.services.ReporteService;
-import lombok.extern.slf4j.Slf4j;
+import com.tpi.agencia.services.RestriccionesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,17 +17,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-@Slf4j
+
 @RestController
 @RequestMapping("/reportes")
 public class ReporteController {
-    private final ReporteService service;
     private final ReporteService reporteService;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     //inyeccion de dependencias
     @Autowired
-    public ReporteController(ReporteService service, ReporteService reporteService) { this.service = service;
+    public ReporteController(ReporteService reporteService, RestriccionesService externalApisService) {
         this.reporteService = reporteService;
     }
 
@@ -61,6 +59,7 @@ public class ReporteController {
         }
     }
 
+    //anda
     @GetMapping("/detalle-pruebas/{idVehiculo}")
     public ResponseEntity<?> obtenerPruebasVehiculo(@PathVariable Integer idVehiculo) {
         try {
@@ -72,6 +71,22 @@ public class ReporteController {
                     HttpStatus.BAD_REQUEST.value(),
                     "Bad Request",
                     e.getMessage()
+            );
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
+    }
+
+    @GetMapping("/incidentes")
+    public ResponseEntity<?> obtenerIncidentes() {
+        try {
+            List<PruebaDto> pruebas = reporteService.obtenerIncidentes();
+            IncidentesResponse response = new IncidentesResponse(pruebas);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            ErrorResponse errorResponse = new ErrorResponse(
+                    HttpStatus.BAD_REQUEST.value(),
+                    "Bad Request",
+                    "Error al obtener el reporte de incidentes: " + e.getMessage()
             );
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
@@ -91,6 +106,5 @@ public class ReporteController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
         }
     }
-
 }
 

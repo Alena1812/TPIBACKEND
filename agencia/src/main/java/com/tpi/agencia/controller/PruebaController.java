@@ -61,7 +61,6 @@ public class PruebaController {
         if (pruebas.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-
         return ResponseEntity.ok(pruebas);
     }
 

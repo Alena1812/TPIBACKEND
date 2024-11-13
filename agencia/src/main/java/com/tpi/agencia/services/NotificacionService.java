@@ -14,7 +14,8 @@ import org.springframework.web.client.RestTemplate;
 public class NotificacionService {
 
     private final RestTemplate restTemplate;
-    private final String notificacionUrl = "http://localhost:8081/promocion/new"; // URL del microservicio de notificación
+    private final String notificacionUrl = "http://localhost:8081/notificaciones/promocion/new"; // URL del microservicio de notificación
+
     @Autowired
     public NotificacionService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
