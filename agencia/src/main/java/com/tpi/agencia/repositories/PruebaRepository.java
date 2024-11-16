@@ -17,12 +17,12 @@ public interface PruebaRepository extends CrudRepository<Prueba, Integer> {
     List<Prueba> findByFechaHoraFinIsNull();
 
 
-    @Query("SELECT p FROM Prueba p WHERE p.vehiculo.id = :vehiculoId " +
+    @Query("SELECT p FROM Prueba p WHERE p.vehiculo.id = :idVehiculo " +
             "AND (p.fechaHoraFin IS NULL AND :fechaNotificacion BETWEEN p.fechaHoraInicio AND CURRENT_TIMESTAMP " +
             "OR :fechaNotificacion BETWEEN p.fechaHoraInicio AND p.fechaHoraFin)")
 
     Prueba findPruebaByVehiculoIdAndFechaNotificacion(
-            @Param("vehiculoId") Integer vehiculoId,
+            @Param("idVehiculo") Integer idVehiculo,
             @Param("fechaNotificacion") LocalDateTime fechaNotificacion);
 
     @Query("SELECT p FROM Prueba p WHERE p.vehiculo.id = :vehiculoId " +

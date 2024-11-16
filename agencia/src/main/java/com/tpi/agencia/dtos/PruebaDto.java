@@ -4,6 +4,7 @@ import com.tpi.agencia.models.Prueba;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -13,8 +14,8 @@ public class PruebaDto {
     private VehiculoDto vehiculo;
     private EmpleadoDto empleado;
     private InteresadoDto interesado;
-    private Date fechaHoraInicio;
-    private Date fechaHoraFin;
+    private LocalDateTime fechaHoraInicio;
+    private LocalDateTime fechaHoraFin;
     private String comentarios;
 
     public PruebaDto(Prueba prueba) {

@@ -3,6 +3,7 @@ package com.tpi.agencia.models;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString @EqualsAndHashCode
@@ -33,10 +34,10 @@ public class Prueba {
     private Interesado interesado;
 
     @Column(name = "FECHA_HORA_INICIO")
-    private Date fechaHoraInicio;
+    private LocalDateTime fechaHoraInicio;
 
     @Column(name = "FECHA_HORA_FIN")
-    private Date fechaHoraFin = null;
+    private LocalDateTime fechaHoraFin = null;
 
     private String comentarios = null;
 

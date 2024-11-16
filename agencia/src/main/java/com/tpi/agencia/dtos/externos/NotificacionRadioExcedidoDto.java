@@ -1,12 +1,33 @@
 package com.tpi.agencia.dtos.externos;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
-@Data
+import java.time.LocalDateTime;
+@Getter
+@Setter
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class NotificacionRadioExcedidoDto extends NotificacionDto{
-    private double latActual;
-    private double lonActual;
+    private double latitud;
+    private double longitud;
     private Integer idVehiculo;
+
+    public NotificacionRadioExcedidoDto(Integer id, LocalDateTime fechaNotificacion, String texto, Double latitud, Double longitud, Integer idVehiculo) {
+        super(id, fechaNotificacion, texto);
+        this.latitud = latitud;
+        this.longitud = longitud;
+        this.idVehiculo = idVehiculo;
+    }
+    @Override
+    public String toString() {
+        return "NotificacionRadioExcedidoDto{" +
+                "id=" + getId() +
+                ", fechaNotificacion=" + getFechaNotificacion() +
+                ", texto='" + getTexto() + '\'' +
+                ", latitud=" + latitud +
+                ", longitud=" + longitud +
+                ", idVehiculo=" + idVehiculo +
+                '}';
+    }
+
 }

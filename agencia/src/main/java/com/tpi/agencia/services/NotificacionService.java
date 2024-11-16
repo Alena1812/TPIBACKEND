@@ -29,7 +29,6 @@ public class NotificacionService {
                 null, LocalDateTime.now(),
                 "El vehículo ha excedido el radio permitido: " + mensaje
         );
-        notificacion.setReciverEmails(Collections.emptyList());
         enviarNotificacion(notificacion);
     }
 
@@ -39,7 +38,6 @@ public class NotificacionService {
                 null, LocalDateTime.now(),
                 "El vehículo ha ingresado a una zona peligrosa: " + mensaje
         );
-        notificacion.setReciverEmails(Collections.emptyList());
         enviarNotificacion(notificacion);
     }
 

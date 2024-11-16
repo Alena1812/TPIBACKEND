@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.StreamSupport;
@@ -66,9 +68,7 @@ public class PruebaService {
                 .orElseThrow(() -> new IllegalArgumentException("Interesado no encontrado"));
         existingPrueba.setInteresado(interesado);
 
-        Prueba updatedPrueba = repository.save(existingPrueba);
-
-        return new PruebaDto(updatedPrueba);
+        return new PruebaDto(repository.save(existingPrueba));
     }
 
     public Prueba finalizarPrueba(Integer id, String comentario) {
@@ -79,7 +79,7 @@ public class PruebaService {
             throw new IllegalStateException("La prueba ya ha sido finalizada.");
         }
 
-        pruebaEnCurso.setFechaHoraFin(new Date());
+        pruebaEnCurso.setFechaHoraFin(LocalDateTime.now());
         pruebaEnCurso.setComentarios(comentario);
 
         return repository.save(pruebaEnCurso);
@@ -98,7 +98,15 @@ public class PruebaService {
     private Interesado validarInteresado(Integer idInteresado) {
         Interesado interesado = interesadoRepository.findById(idInteresado)
                 .orElseThrow(() -> new IllegalArgumentException("Interesado no encontrado"));
-        if (interesado.getFechaVtoLicencia().before(new Date())) {
+
+        // Convertir Date a LocalDateTime para comparación
+        LocalDateTime fechaActual = LocalDateTime.now();
+        Date fechaVto = interesado.getFechaVtoLicencia();
+        LocalDateTime fechaVtoLicencia = fechaVto.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
+
+        if (fechaVtoLicencia.isBefore(fechaActual)) {
             throw new IllegalArgumentException("La licencia del interesado está vencida.");
         }
         if (interesado.getRestringido()) {
@@ -110,7 +118,6 @@ public class PruebaService {
     private Prueba buildPruebaFromDto(PruebaDto pruebaDto) {
         Vehiculo vehiculo = validarVehiculoDisponible(pruebaDto.getVehiculo().getId());
         Interesado interesado = validarInteresado(pruebaDto.getInteresado().getId());
-
         Empleado empleado = empleadoRepository.findById(pruebaDto.getEmpleado().getLegajo())
                 .orElseThrow(() -> new IllegalArgumentException("Empleado no encontrado"));
 
@@ -118,7 +125,7 @@ public class PruebaService {
         prueba.setVehiculo(vehiculo);
         prueba.setEmpleado(empleado);
         prueba.setInteresado(interesado);
-        prueba.setFechaHoraInicio(new Date());
+        prueba.setFechaHoraInicio(LocalDateTime.now());
 
         return prueba;
     }
