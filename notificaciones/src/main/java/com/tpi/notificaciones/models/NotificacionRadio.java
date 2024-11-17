@@ -28,10 +28,10 @@ public class NotificacionRadio extends Notificacion {
         this.idVehiculo = idVehiculo;
     }
 
-    public NotificacionRadio(Integer id, LocalDateTime fechaNotificacion, String texto, PosicionDto posicion, Integer idVehiculo) {
+    public NotificacionRadio(Integer id, LocalDateTime fechaNotificacion, String texto, double latitud, double longitud, Integer idVehiculo) {
         super(id, fechaNotificacion, texto);
-        this.latitud = posicion.getCoordenadas().getLatitud();
-        this.longitud = posicion.getCoordenadas().getLongitud();
+        this.latitud = latitud;
+        this.longitud = longitud;
         this.idVehiculo = idVehiculo;
     }
 }

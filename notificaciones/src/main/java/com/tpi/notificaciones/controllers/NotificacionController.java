@@ -18,25 +18,25 @@ public class NotificacionController {
     @Autowired
     public NotificacionController(NotificacionService service) {this.notificacionService = service;}
 
-    // Guardar notificacion por radio excedido
-//    @PostMapping("/seguridad/radio-excedido/new")
-//    public ResponseEntity<?> notificaRadioExcedido(@RequestBody NotificacionRadioDto radioExcedido) {
-//        // Verifica que el objeto recibido no sea null y tenga datos
-//        if (radioExcedido == null || radioExcedido.get() == null) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-//                    .body("Las coordenadas no fueron enviadas correctamente.");
-//        }
+//    // Guardar notificacion por radio excedido
+////    @PostMapping("/seguridad/radio-excedido/new")
+////    public ResponseEntity<?> notificaRadioExcedido(@RequestBody NotificacionRadioDto radioExcedido) {
+////        // Verifica que el objeto recibido no sea null y tenga datos
+////        if (radioExcedido == null || radioExcedido.get() == null) {
+////            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+////                    .body("Las coordenadas no fueron enviadas correctamente.");
+////        }
+////
+////        return ResponseEntity.ok(notificacionService.createRadio(radioExcedido));
+////    }
 //
-//        return ResponseEntity.ok(notificacionService.createRadio(radioExcedido));
-//    }
-
-
-    // Guardar notificacion por zona peligrosa
-        @PostMapping("/seguridad/zona-peligrosa/new")
-        public ResponseEntity<?> notificarZonaPeligrosa(
-                @RequestBody PosicionDto zonaPeligrosa) {
-            return ResponseEntity.ok(notificacionService.createZona(zonaPeligrosa));
-        }
+//
+//    // Guardar notificacion por zona peligrosa
+//        @PostMapping("/seguridad/zona-peligrosa/new")
+//        public ResponseEntity<?> notificarZonaPeligrosa(
+//                @RequestBody PosicionDto zonaPeligrosa) {
+//            return ResponseEntity.ok(notificacionService.createZona(zonaPeligrosa));
+//        }
 
     @PostMapping("/promocion/new")
     public ResponseEntity<Notificacion> notificarPromocion(

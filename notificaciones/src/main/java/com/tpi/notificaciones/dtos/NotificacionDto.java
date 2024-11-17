@@ -13,14 +13,12 @@ import java.util.List;
 @NoArgsConstructor
 public abstract class NotificacionDto {
     private Integer id;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaNotificacion;
     private String texto;
 
-    public NotificacionDto(Integer id, String texto) {
+    public NotificacionDto(Integer id, LocalDateTime fechaNotificacion, String texto) {
         this.id = id;
-        this.fechaNotificacion = LocalDateTime.now();
+        this.fechaNotificacion = fechaNotificacion;
         this.texto = texto;
     }
 }

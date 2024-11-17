@@ -18,7 +18,7 @@ public class NotificacionPromocionDto extends NotificacionDto{
     }
 
     public NotificacionPromocionDto(NotificacionPromocion notificacion) {
-        super(notificacion.getId(), notificacion.getTexto());
+        super(notificacion.getId(), notificacion.getFechaNotificacion(), notificacion.getTexto());
         this.codigoPromocion = notificacion.getCodigoPromocion();
         this.fechaExpiracion = notificacion.getFechaExpiracion();
     }
