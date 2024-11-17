@@ -68,6 +68,7 @@ public class ReporteService {
     }
 
     private PruebaDto buscarPruebaDeNotificacion(NotificacionRadioExcedidoDto notificacion) {
+        System.out.println(notificacion);
         System.out.println(notificacion.getIdVehiculo());
         System.out.println(notificacion.getFechaNotificacion());
         Prueba prueba = pruebaRepository.findPruebaByVehiculoIdAndFechaNotificacion(notificacion.getIdVehiculo(), notificacion.getFechaNotificacion());
@@ -89,7 +90,7 @@ public class ReporteService {
     }
     public List<PruebaDto> obtenerIncidentes() {
         List<NotificacionRadioExcedidoDto> notificaciones = restriccionesService.getNotificacionesRadioExcedido();
-
+        System.out.println(notificaciones);
         // Mapea las notificaciones a PruebaDto
         return notificaciones.stream()
                 .map(this::buscarPruebaDeNotificacion)
