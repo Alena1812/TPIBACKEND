@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -28,7 +29,7 @@ public class NotificacionRadio extends Notificacion {
         this.idVehiculo = idVehiculo;
     }
 
-    public NotificacionRadio(Integer id, LocalDateTime fechaNotificacion, String texto, double latitud, double longitud, Integer idVehiculo) {
+    public NotificacionRadio(Integer id, Date fechaNotificacion, String texto, double latitud, double longitud, Integer idVehiculo) {
         super(id, fechaNotificacion, texto);
         this.latitud = latitud;
         this.longitud = longitud;

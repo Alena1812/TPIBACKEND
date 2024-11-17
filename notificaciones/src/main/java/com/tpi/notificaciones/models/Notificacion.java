@@ -23,11 +23,11 @@ public abstract class Notificacion {
     private Integer id;
     // Indica que el campo 'fechaNotificacion' debe ser tratado como una fecha y hora, almacenada en el formato TIMESTAMP en la base de datos.
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime fechaNotificacion;
+    private Date fechaNotificacion;
     private String texto;
 
     // Constructor
-    public Notificacion(Integer id, LocalDateTime fechaNotificacion, String texto) {
+    public Notificacion(Integer id, Date fechaNotificacion, String texto) {
         this.id = id;
         this.fechaNotificacion = fechaNotificacion;
         this.texto = texto;

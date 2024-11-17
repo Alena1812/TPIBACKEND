@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 public interface PruebaRepository extends CrudRepository<Prueba, Integer> {
@@ -23,7 +24,10 @@ public interface PruebaRepository extends CrudRepository<Prueba, Integer> {
 
     Prueba findPruebaByVehiculoIdAndFechaNotificacion(
             @Param("idVehiculo") Integer idVehiculo,
-            @Param("fechaNotificacion") LocalDateTime fechaNotificacion);
+            @Param("fechaNotificacion") Date fechaNotificacion);
+
+    @Query("SELECT p FROM Prueba p WHERE p.vehiculo.id = :idVehiculo ")
+    Prueba findPruebaByVehiculoId(@Param ("idVehiculo") Integer idVehiculo);
 
     @Query("SELECT p FROM Prueba p WHERE p.vehiculo.id = :vehiculoId " +
             "AND p.empleado.legajo = :idEmpleado " +
@@ -31,7 +35,11 @@ public interface PruebaRepository extends CrudRepository<Prueba, Integer> {
             "OR :fechaNotificacion BETWEEN p.fechaHoraInicio AND p.fechaHoraFin)")
     Prueba findPruebaByVehiculoIdAndFechaNotificacionAndEmpleado(
             @Param("vehiculoId") Integer vehiculoId,
-            @Param("fechaNotificacion") LocalDateTime fechaNotificacion,
+            @Param("fechaNotificacion") Date fechaNotificacion,
             @Param("idEmpleado") Integer idEmpleado);
+
+    @Query("SELECT p FROM Prueba p WHERE p.vehiculo.id = :idVehiculo AND p.empleado.legajo = :idEmpleado ")
+    Prueba findPruebaByVehiculoIdAndEmpleado(@Param("idVehiculo") Integer idVehiculo,
+                                             @Param("idEmpleado") Integer idEmpleado);
 
 }

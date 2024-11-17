@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -70,7 +71,7 @@ public class NotificacionService {
 
     private NotificacionPromocion buildNotificacionPromocionFromDto(NotificacionPromocionDto promocionDto) {
         NotificacionPromocion promocion = new NotificacionPromocion();
-        promocion.setFechaNotificacion(LocalDateTime.now());
+        promocion.setFechaNotificacion(new Date());
         promocion.setCodigoPromocion(promocionDto.getCodigoPromocion());
         promocion.setTexto(promocionDto.getTexto());
         promocion.setFechaExpiracion(promocionDto.getFechaExpiracion());
@@ -79,7 +80,7 @@ public class NotificacionService {
 
     private NotificacionRadio buildNotificacionRadioFromDto(PosicionDto posicion) {
         NotificacionRadio radioExcedido = new NotificacionRadio();
-        radioExcedido.setFechaNotificacion(LocalDateTime.now());
+        radioExcedido.setFechaNotificacion(new Date());
         radioExcedido.setLatitud(posicion.getCoordenadas().getLatitud());
         radioExcedido.setLongitud(posicion.getCoordenadas().getLongitud());
         radioExcedido.setIdVehiculo(posicion.getVehiculo().getId());
@@ -89,7 +90,7 @@ public class NotificacionService {
 
     private NotificacionZona buildNotificacionZonaFromDto(PosicionDto posicion) {
         NotificacionZona zonaPeligrosa = new NotificacionZona();
-        zonaPeligrosa.setFechaNotificacion(LocalDateTime.now());
+        zonaPeligrosa.setFechaNotificacion(new Date());
         zonaPeligrosa.setNivelPeligro("ALTO");
         zonaPeligrosa.setLatitud(posicion.getCoordenadas().getLatitud());
         zonaPeligrosa.setLongitud(posicion.getCoordenadas().getLongitud());

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Date;
 
 
 import org.springframework.web.client.RestTemplate;
@@ -16,7 +17,7 @@ public class NotificacionService {
 
     private final RestTemplate restTemplate;
 
-    private final String notificacionUrl = "http://localhost:8081/notificaciones";// URL del microservicio de notificación
+    private final String notificacionUrl = "http://localhost:8081/notificaciones/promocion/new";// URL del microservicio de notificación
 
     @Autowired
     public NotificacionService(RestTemplate restTemplate) {
@@ -26,7 +27,7 @@ public class NotificacionService {
 
     public void enviarMensajeRadioExcedido(PosicionDto mensaje) {
         NotificacionDto notificacion = new NotificacionDto(
-                null, LocalDateTime.now(),
+                null, new Date(),
                 "El vehículo ha excedido el radio permitido: " + mensaje
         );
         enviarNotificacion(notificacion);
@@ -35,7 +36,7 @@ public class NotificacionService {
 
     public void enviarMensajeZonaPeligrosa(PosicionDto mensaje) {
         NotificacionDto notificacion = new NotificacionDto(
-                null, LocalDateTime.now(),
+                null, new Date(),
                 "El vehículo ha ingresado a una zona peligrosa: " + mensaje
         );
         enviarNotificacion(notificacion);

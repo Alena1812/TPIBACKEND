@@ -71,21 +71,24 @@ public class ReporteService {
         System.out.println(notificacion);
         System.out.println(notificacion.getIdVehiculo());
         System.out.println(notificacion.getFechaNotificacion());
-        Prueba prueba = pruebaRepository.findPruebaByVehiculoIdAndFechaNotificacion(notificacion.getIdVehiculo(), notificacion.getFechaNotificacion());
+        Prueba prueba = pruebaRepository.findPruebaByVehiculoId(notificacion.getIdVehiculo());
         System.out.println(prueba);
         return new PruebaDto(prueba);
     }
 
     private PruebaDto buscarPruebaDeNotificacionEmpleado(NotificacionRadioExcedidoDto notificacion, Integer idEmpleado) {
-        Prueba prueba = pruebaRepository.findPruebaByVehiculoIdAndFechaNotificacionAndEmpleado(notificacion.getIdVehiculo(), notificacion.getFechaNotificacion(), idEmpleado);
+        System.out.println(notificacion);
+        System.out.println(idEmpleado);
+        Prueba prueba = pruebaRepository.findPruebaByVehiculoIdAndEmpleado(notificacion.getIdVehiculo(), idEmpleado);
         return new PruebaDto(prueba);
     }
 
     public List<PruebaDto> obtenerIncidentesEmpleado(Integer idEmpleado) {
         List<NotificacionRadioExcedidoDto> notificaciones = restriccionesService.getNotificacionesRadioExcedido();
-
+        System.out.println(notificaciones);
         return notificaciones.stream()
-                .map(notificacion -> buscarPruebaDeNotificacionEmpleado(notificacion, idEmpleado))
+                .map(this::buscarPruebaDeNotificacion)
+                .filter(prueba -> prueba.getEmpleado().getLegajo().equals(idEmpleado)) // Filtra después
                 .collect(Collectors.toList());
     }
     public List<PruebaDto> obtenerIncidentes() {

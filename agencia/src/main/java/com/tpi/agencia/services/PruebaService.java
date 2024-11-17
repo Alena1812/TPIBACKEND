@@ -2,12 +2,9 @@ package com.tpi.agencia.services;
 import com.tpi.agencia.repositories.*;
 import com.tpi.agencia.dtos.PruebaDto;
 import com.tpi.agencia.models.*;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.StreamSupport;
@@ -71,7 +68,7 @@ public class PruebaService {
         return new PruebaDto(repository.save(existingPrueba));
     }
 
-    public Prueba finalizarPrueba(Integer id, String comentario) {
+    public PruebaDto finalizarPrueba(Integer id, String comentario) {
         Prueba pruebaEnCurso = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Prueba no encontrada"));
 
@@ -82,7 +79,7 @@ public class PruebaService {
         pruebaEnCurso.setFechaHoraFin(new Date());
         pruebaEnCurso.setComentarios(comentario);
 
-        return repository.save(pruebaEnCurso);
+        return new PruebaDto(repository.save(pruebaEnCurso));
     }
 
     private Vehiculo validarVehiculoDisponible(Integer idVehiculo) {

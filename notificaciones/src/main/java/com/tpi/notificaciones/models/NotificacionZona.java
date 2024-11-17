@@ -7,6 +7,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
+
 @Getter
 @Setter
 @ToString
@@ -28,7 +30,7 @@ public class NotificacionZona extends Notificacion{
         this.idVehiculo = idVehiculo;
     }
 
-    public NotificacionZona(Integer id, LocalDateTime fechaNotificacion, String texto, PosicionDto posicion, String nivelPeligro, Integer idVehiculo) {
+    public NotificacionZona(Integer id, Date fechaNotificacion, String texto, PosicionDto posicion, String nivelPeligro, Integer idVehiculo) {
         super(id, fechaNotificacion, texto);
         this.latitud = posicion.getCoordenadas().getLatitud();
         this.longitud = posicion.getCoordenadas().getLongitud();

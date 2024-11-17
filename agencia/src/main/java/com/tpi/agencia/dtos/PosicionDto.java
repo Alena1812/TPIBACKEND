@@ -8,13 +8,9 @@ import java.util.Date;
 public class PosicionDto {
     private int id;
     private VehiculoDto vehiculo;
-    private Coordenadas coordenadas;
+    private Date fechaHora;
+    private Double latitud;
+    private Double longitud;
     private String mensaje;
-
-    @Data
-    public static class Coordenadas {
-        private double lat;
-        private double lon;
-    }
 
 }

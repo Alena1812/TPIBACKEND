@@ -99,7 +99,7 @@ public class PruebaController {
     @PutMapping("/finalizar/{id}")
     public ResponseEntity<?> finalizarPrueba(@PathVariable Integer id, @RequestBody PruebaDto pruebaDto) {
         try {
-            Prueba updatedPrueba = service.finalizarPrueba(id, pruebaDto.getComentarios());
+            PruebaDto updatedPrueba = service.finalizarPrueba(id, pruebaDto.getComentarios());
             return ResponseEntity.ok(updatedPrueba);
         } catch (IllegalArgumentException e) {
             ErrorResponse errorResponse = new ErrorResponse(

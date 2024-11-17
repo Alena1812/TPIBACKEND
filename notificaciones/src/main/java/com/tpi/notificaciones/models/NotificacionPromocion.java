@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -28,7 +29,7 @@ public class NotificacionPromocion extends Notificacion {
     }
 
     // Constructor completo (incluyendo ID y atributos de la superclase)
-    public NotificacionPromocion(Integer id, LocalDateTime fechaNotificacion, String texto, String codigoPromocion, LocalDate fechaExpiracion) {
+    public NotificacionPromocion(Integer id, Date fechaNotificacion, String texto, String codigoPromocion, LocalDate fechaExpiracion) {
         super(id, fechaNotificacion, texto);
         this.codigoPromocion = codigoPromocion;
         this.fechaExpiracion = fechaExpiracion;

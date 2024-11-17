@@ -13,10 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 public abstract class NotificacionDto {
     private Integer id;
-    private LocalDateTime fechaNotificacion;
+    private Date fechaNotificacion;
     private String texto;
 
-    public NotificacionDto(Integer id, LocalDateTime fechaNotificacion, String texto) {
+    public NotificacionDto(Integer id, Date fechaNotificacion, String texto) {
         this.id = id;
         this.fechaNotificacion = fechaNotificacion;
         this.texto = texto;

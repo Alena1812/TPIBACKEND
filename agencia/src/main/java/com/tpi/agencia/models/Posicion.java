@@ -27,6 +27,8 @@ public class Posicion {
 
     private Double longitud;
 
+    private String mensaje;
+
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
         if (vehiculo != null) {

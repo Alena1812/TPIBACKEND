@@ -3,6 +3,8 @@ package com.tpi.agencia.dtos.externos;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -12,7 +14,7 @@ public class NotificacionRadioExcedidoDto extends NotificacionDto{
     private double longitud;
     private Integer idVehiculo;
 
-    public NotificacionRadioExcedidoDto(Integer id, LocalDateTime fechaNotificacion, String texto, Double latitud, Double longitud, Integer idVehiculo) {
+    public NotificacionRadioExcedidoDto(Integer id, Date fechaNotificacion, String texto, Double latitud, Double longitud, Integer idVehiculo) {
         super(id, fechaNotificacion, texto);
         this.latitud = latitud;
         this.longitud = longitud;

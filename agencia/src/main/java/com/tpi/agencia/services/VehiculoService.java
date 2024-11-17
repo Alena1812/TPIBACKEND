@@ -89,8 +89,8 @@ public class VehiculoService {
 
         Posicion posicion = new Posicion();
         posicion.setVehiculo(vehiculo);
-        posicion.setLatitud(posicionDto.getCoordenadas().getLat());
-        posicion.setLongitud(posicionDto.getCoordenadas().getLon());
+        posicion.setLatitud(posicionDto.getLatitud());
+        posicion.setLongitud(posicionDto.getLongitud());
         posicion.setFechaHora(new Date());
 
         return posicion;
@@ -102,16 +102,16 @@ public class VehiculoService {
     }
 
     private boolean estaPosicionFueraRadioAdmitido(PosicionDto posicion, RestriccionesDto restricciones){
-        double distance = Math.sqrt(Math.pow(posicion.getCoordenadas().getLat() - restricciones.getCoordenadasAgencia().getLat(), 2)
-                + Math.pow(posicion.getCoordenadas().getLon() - restricciones.getCoordenadasAgencia().getLon(), 2));
+        double distance = Math.sqrt(Math.pow(posicion.getLatitud() - restricciones.getCoordenadasAgencia().getLat(), 2)
+                + Math.pow(posicion.getLongitud() - restricciones.getCoordenadasAgencia().getLon(), 2));
 
         return distance > restricciones.getRadioAdmitidoKm();
     }
 
     private boolean estaEnZonaRestringida(PosicionDto posicion, RestriccionesDto restricciones) {
         return restricciones.getZonasRestringidas().stream().anyMatch(zona -> {
-            double latVehiculo = posicion.getCoordenadas().getLat();
-            double lonVehiculo = posicion.getCoordenadas().getLon();
+            double latVehiculo = posicion.getLatitud();
+            double lonVehiculo = posicion.getLongitud();
             double latNoroeste = zona.getNoroeste().getLat();
             double lonNoroeste = zona.getNoroeste().getLon();
             double latSureste = zona.getSureste().getLat();
