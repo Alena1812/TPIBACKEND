@@ -23,12 +23,16 @@ import java.util.List;
 @RequestMapping("/reportes")
 public class ReporteController {
     private final ReporteService reporteService;
+    private final RestriccionesService restriccionesService;
+
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     //inyeccion de dependencias
     @Autowired
-    public ReporteController(ReporteService reporteService, RestriccionesService externalApisService) {
+    public ReporteController(ReporteService reporteService, RestriccionesService restriccionesService) {
         this.reporteService = reporteService;
+        this.restriccionesService = restriccionesService;
+
     }
 
     @GetMapping(value = "/kilometros-vehiculo/{idVehiculo}")
@@ -37,9 +41,6 @@ public class ReporteController {
             @RequestParam("fechaDesde") String fechaDesde,
             @RequestParam("fechaHasta") String fechaHasta) {
         try {
-            // Definir el formato de la fecha
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
             // Convertir las fechas desde String (yyyy-MM-dd) a objetos Date
             Date desde = dateFormat.parse(fechaDesde);
             Date hasta = dateFormat.parse(fechaHasta);

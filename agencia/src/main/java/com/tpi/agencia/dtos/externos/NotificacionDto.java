@@ -11,8 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 public class NotificacionDto {
     private Integer id;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaNotificacion;
     private String texto;
 

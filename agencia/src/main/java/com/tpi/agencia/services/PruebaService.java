@@ -79,7 +79,7 @@ public class PruebaService {
             throw new IllegalStateException("La prueba ya ha sido finalizada.");
         }
 
-        pruebaEnCurso.setFechaHoraFin(LocalDateTime.now());
+        pruebaEnCurso.setFechaHoraFin(new Date());
         pruebaEnCurso.setComentarios(comentario);
 
         return repository.save(pruebaEnCurso);
@@ -99,14 +99,7 @@ public class PruebaService {
         Interesado interesado = interesadoRepository.findById(idInteresado)
                 .orElseThrow(() -> new IllegalArgumentException("Interesado no encontrado"));
 
-        // Convertir Date a LocalDateTime para comparación
-        LocalDateTime fechaActual = LocalDateTime.now();
-        Date fechaVto = interesado.getFechaVtoLicencia();
-        LocalDateTime fechaVtoLicencia = fechaVto.toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
-
-        if (fechaVtoLicencia.isBefore(fechaActual)) {
+        if (interesado.getFechaVtoLicencia().before(new Date())) {
             throw new IllegalArgumentException("La licencia del interesado está vencida.");
         }
         if (interesado.getRestringido()) {
@@ -125,7 +118,7 @@ public class PruebaService {
         prueba.setVehiculo(vehiculo);
         prueba.setEmpleado(empleado);
         prueba.setInteresado(interesado);
-        prueba.setFechaHoraInicio(LocalDateTime.now());
+        prueba.setFechaHoraInicio(new Date());
 
         return prueba;
     }

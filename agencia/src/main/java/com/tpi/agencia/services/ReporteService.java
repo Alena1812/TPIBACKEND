@@ -88,23 +88,12 @@ public class ReporteService {
                 .collect(Collectors.toList());
     }
     public List<PruebaDto> obtenerIncidentes() {
-        try {
-            // Intenta obtener las notificaciones
-            List<NotificacionRadioExcedidoDto> notificaciones = restriccionesService.getNotificacionesRadioExcedido();
-            System.out.println(notificaciones);
-            // Si no hay notificaciones, puedes devolver una lista vacía o lanzar una excepción
-            if (notificaciones == null || notificaciones.isEmpty()) {
-                throw new RuntimeException("No se encontraron notificaciones para procesar.");
-            }
+        List<NotificacionRadioExcedidoDto> notificaciones = restriccionesService.getNotificacionesRadioExcedido();
 
-            // Mapea las notificaciones a PruebaDto
-            return notificaciones.stream()
-                    .map(this::buscarPruebaDeNotificacion)
-                    .collect(Collectors.toList());
-        } catch (Exception e) {
-            // Maneja el error
-            throw new RuntimeException("Hubo un error al obtener los incidentes.", e); // Lanza la excepción o devuelve un valor predeterminado
-        }
+        // Mapea las notificaciones a PruebaDto
+        return notificaciones.stream()
+                .map(this::buscarPruebaDeNotificacion)
+                .collect(Collectors.toList());
     }
 
     public Iterable<Prueba> getAll() { return pruebaRepository.findAll(); }

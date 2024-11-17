@@ -14,8 +14,8 @@ public class PruebaDto {
     private VehiculoDto vehiculo;
     private EmpleadoDto empleado;
     private InteresadoDto interesado;
-    private LocalDateTime fechaHoraInicio;
-    private LocalDateTime fechaHoraFin;
+    private Date fechaHoraInicio;
+    private Date fechaHoraFin;
     private String comentarios;
 
     public PruebaDto(Prueba prueba) {

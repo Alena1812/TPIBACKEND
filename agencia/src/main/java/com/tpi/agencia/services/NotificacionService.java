@@ -16,7 +16,7 @@ public class NotificacionService {
 
     private final RestTemplate restTemplate;
 
-    private final String notificacionUrl = "http://localhost:8081/notificaciones/promocion/new";// URL del microservicio de notificación
+    private final String notificacionUrl = "http://localhost:8081/notificaciones";// URL del microservicio de notificación
 
     @Autowired
     public NotificacionService(RestTemplate restTemplate) {
@@ -43,13 +43,7 @@ public class NotificacionService {
 
 
     private void enviarNotificacion(NotificacionDto notificacionDto) {
-        try {
-            restTemplate.postForEntity(notificacionUrl, notificacionDto, Void.class);
-        } catch (Exception e) {
-            // Lógica para manejar el error, por ejemplo, loguear el error o intentar reintentar
-            e.printStackTrace();
-            // O podrías re-lanzar la excepción o manejarla de manera personalizada
-        }
+            restTemplate.postForObject(notificacionUrl, notificacionDto, NotificacionDto.class);
     }
 
 }

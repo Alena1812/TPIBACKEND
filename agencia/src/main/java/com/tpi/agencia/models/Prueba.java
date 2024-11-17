@@ -34,10 +34,10 @@ public class Prueba {
     private Interesado interesado;
 
     @Column(name = "FECHA_HORA_INICIO")
-    private LocalDateTime fechaHoraInicio;
+    private Date fechaHoraInicio;
 
     @Column(name = "FECHA_HORA_FIN")
-    private LocalDateTime fechaHoraFin = null;
+    private Date fechaHoraFin = null;
 
     private String comentarios = null;
 
