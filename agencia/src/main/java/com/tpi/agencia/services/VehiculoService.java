@@ -47,21 +47,21 @@ public class VehiculoService {
          */
 
         if (estaPosicionFueraRadioAdmitido(posicionRespuesta, restricciones)){
-            posicionRespuesta.setMensaje("La posicion actual del vehiculo se encuentra por fuera del radio permitido por la agencia.");
+            posicionRespuesta.setTexto("La posicion actual del vehiculo se encuentra por fuera del radio permitido por la agencia.");
             // trigger notification.
             notificacionService.enviarMensajeRadioExcedido(posicionRespuesta);
             return posicionRespuesta;
         }
 
         if (estaEnZonaRestringida(posicionRespuesta, restricciones)){
-            posicionRespuesta.setMensaje("La posicion actual del vehiculo se encuentra dentro de un area restringida.");
+            posicionRespuesta.setTexto("La posicion actual del vehiculo se encuentra dentro de un area restringida.");
             // trigger notification.
             notificacionService.enviarMensajeZonaPeligrosa(posicionRespuesta);
             return posicionRespuesta;
         }
 
         // Posicion autorizada
-        posicionRespuesta.setMensaje("La posicion actual del vehiculo fue registrada.");
+        posicionRespuesta.setTexto("La posicion actual del vehiculo fue registrada.");
         return posicionRespuesta;
     }
 
@@ -89,8 +89,8 @@ public class VehiculoService {
 
         Posicion posicion = new Posicion();
         posicion.setVehiculo(vehiculo);
-        posicion.setLatitud(posicionDto.getLatitud());
-        posicion.setLongitud(posicionDto.getLongitud());
+        posicion.setLatitud(posicionDto.getCoordenadas().getLatitud());
+        posicion.setLongitud(posicionDto.getCoordenadas().getLatitud());
         posicion.setFechaHora(new Date());
 
         return posicion;
@@ -102,16 +102,16 @@ public class VehiculoService {
     }
 
     private boolean estaPosicionFueraRadioAdmitido(PosicionDto posicion, RestriccionesDto restricciones){
-        double distance = Math.sqrt(Math.pow(posicion.getLatitud() - restricciones.getCoordenadasAgencia().getLat(), 2)
-                + Math.pow(posicion.getLongitud() - restricciones.getCoordenadasAgencia().getLon(), 2));
+        double distance = Math.sqrt(Math.pow(posicion.getCoordenadas().getLatitud() - restricciones.getCoordenadasAgencia().getLat(), 2)
+                + Math.pow(posicion.getCoordenadas().getLongitud() - restricciones.getCoordenadasAgencia().getLon(), 2));
 
         return distance > restricciones.getRadioAdmitidoKm();
     }
 
     private boolean estaEnZonaRestringida(PosicionDto posicion, RestriccionesDto restricciones) {
         return restricciones.getZonasRestringidas().stream().anyMatch(zona -> {
-            double latVehiculo = posicion.getLatitud();
-            double lonVehiculo = posicion.getLongitud();
+            double latVehiculo = posicion.getCoordenadas().getLatitud();
+            double lonVehiculo = posicion.getCoordenadas().getLongitud();
             double latNoroeste = zona.getNoroeste().getLat();
             double lonNoroeste = zona.getNoroeste().getLon();
             double latSureste = zona.getSureste().getLat();

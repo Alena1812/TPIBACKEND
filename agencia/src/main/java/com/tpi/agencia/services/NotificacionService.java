@@ -17,7 +17,9 @@ public class NotificacionService {
 
     private final RestTemplate restTemplate;
 
-    private final String notificacionUrl = "http://localhost:8081/notificaciones/promocion/new";// URL del microservicio de notificación
+    private final String notificacionRadioUrl = "http://localhost:8081/notificaciones/seguridad/radio-excedido/new";// URL del microservicio de notificación
+    private final String notificacionZonaUrl = "http://localhost:8081/notificaciones/seguridad/zona-peligrosa/new";// URL del microservicio de notificación
+
 
     @Autowired
     public NotificacionService(RestTemplate restTemplate) {
@@ -25,27 +27,15 @@ public class NotificacionService {
     }
 
 
-    public void enviarMensajeRadioExcedido(PosicionDto mensaje) {
-        NotificacionDto notificacion = new NotificacionDto(
-                null, new Date(),
-                "El vehículo ha excedido el radio permitido: " + mensaje
-        );
-        enviarNotificacion(notificacion);
+    public void enviarMensajeRadioExcedido(PosicionDto radioExcedido) {
+        restTemplate.postForObject(notificacionRadioUrl, radioExcedido, PosicionDto.class);
     }
 
 
-    public void enviarMensajeZonaPeligrosa(PosicionDto mensaje) {
-        NotificacionDto notificacion = new NotificacionDto(
-                null, new Date(),
-                "El vehículo ha ingresado a una zona peligrosa: " + mensaje
-        );
-        enviarNotificacion(notificacion);
+    public void enviarMensajeZonaPeligrosa(PosicionDto zonaPeligrosa) {
+        restTemplate.postForObject(notificacionZonaUrl, zonaPeligrosa, PosicionDto.class);
     }
 
-
-    private void enviarNotificacion(NotificacionDto notificacionDto) {
-            restTemplate.postForObject(notificacionUrl, notificacionDto, NotificacionDto.class);
-    }
 
 }
 

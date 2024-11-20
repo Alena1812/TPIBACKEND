@@ -7,8 +7,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class NotificacionRadioDto extends NotificacionDto{
-    private double latitud;
-    private double longitud;
+    private Double latitud;
+    private Double longitud;
     private Integer idVehiculo;
 
     public NotificacionRadioDto(NotificacionRadio notificacionRadio){
