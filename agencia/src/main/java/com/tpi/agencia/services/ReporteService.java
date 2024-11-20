@@ -71,7 +71,7 @@ public class ReporteService {
         System.out.println(notificacion);
         System.out.println(notificacion.getIdVehiculo());
         System.out.println(notificacion.getFechaNotificacion());
-        Prueba prueba = pruebaRepository.findPruebaByVehiculoId(notificacion.getIdVehiculo());
+        Prueba prueba = pruebaRepository.findPruebaByVehiculoIdAndFechaNotificacion(notificacion.getIdVehiculo(), notificacion.getFechaNotificacion());
         System.out.println(prueba);
         return new PruebaDto(prueba);
     }

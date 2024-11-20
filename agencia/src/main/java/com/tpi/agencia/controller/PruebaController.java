@@ -101,7 +101,14 @@ public class PruebaController {
         try {
             PruebaDto updatedPrueba = service.finalizarPrueba(id, pruebaDto.getComentarios());
             return ResponseEntity.ok(updatedPrueba);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalStateException e) { //Manejo para prueba ya finalizada
+            ErrorResponse errorResponse = new ErrorResponse(
+                    HttpStatus.CONFLICT.value(),
+                    "Conflict",
+                    e.getMessage()
+            );
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+        } catch (IllegalArgumentException e) { // Manejo para prueba no encontrada
             ErrorResponse errorResponse = new ErrorResponse(
                     HttpStatus.BAD_REQUEST.value(),
                     "Bad Request",
