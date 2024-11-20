@@ -110,8 +110,8 @@ public class ReporteController {
     public ResponseEntity<?> obtenerIncidentesEmpleado(@PathVariable Integer idEmpleado) {
         try {
             List<PruebaDto> pruebas = reporteService.obtenerIncidentesEmpleado(idEmpleado);
-            //IncidentesXEmpleado response = new IncidentesXEmpleado(idEmpleado, pruebas);
-            return ResponseEntity.ok(pruebas);
+            IncidentesXEmpleado response = new IncidentesXEmpleado(idEmpleado, pruebas);
+            return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             ErrorResponse errorResponse = new ErrorResponse(
                     HttpStatus.BAD_REQUEST.value(),

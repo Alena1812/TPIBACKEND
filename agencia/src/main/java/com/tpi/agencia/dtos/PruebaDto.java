@@ -1,5 +1,6 @@
 package com.tpi.agencia.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tpi.agencia.models.Prueba;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -12,6 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.tpi.agencia.services.RestriccionesService;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.AbstractMap;
+import java.util.Objects;
+import java.util.stream.StreamSupport;
+import java.util.stream.Collectors;
+
 
 import java.util.Date;
 import java.util.List;
@@ -68,12 +75,34 @@ public class ReporteService {
     }
 
     private PruebaDto buscarPruebaDeNotificacion(NotificacionRadioExcedidoDto notificacion) {
-        System.out.println(notificacion);
-        System.out.println(notificacion.getIdVehiculo());
-        System.out.println(notificacion.getFechaNotificacion());
-        Prueba prueba = pruebaRepository.findPruebaByVehiculoIdAndFechaNotificacion(notificacion.getIdVehiculo(), notificacion.getFechaNotificacion());
-        System.out.println(prueba);
-        return new PruebaDto(prueba);
+        List<Prueba> pruebas = pruebaRepository.findPruebasByVehiculoId(notificacion.getIdVehiculo());
+
+        Date fechaNotificacion = notificacion.getFechaNotificacion();
+        Date fechaActual = new Date();
+
+        List<Prueba> pruebasFiltradas = pruebas.stream()
+                .filter(prueba -> {
+                    Date fechaHoraInicio = prueba.getFechaHoraInicio();
+                    Date fechaHoraFin = prueba.getFechaHoraFin();
+
+                    return (fechaHoraFin == null &&
+                            fechaNotificacion.after(fechaHoraInicio) &&
+                            fechaNotificacion.before(fechaActual)) ||
+                            (fechaHoraFin != null &&
+                                    fechaNotificacion.after(fechaHoraInicio) &&
+                                    fechaNotificacion.before(fechaHoraFin));
+                })
+                .collect(Collectors.toList());
+
+        if (!pruebasFiltradas.isEmpty()) {
+            return new PruebaDto(pruebasFiltradas.get(0));
+        }
+
+        if (!pruebas.isEmpty()) {
+            return new PruebaDto(pruebas.get(0));
+        }
+
+        return null;
     }
 
     private PruebaDto buscarPruebaDeNotificacionEmpleado(NotificacionRadioExcedidoDto notificacion, Integer idEmpleado) {
@@ -85,18 +114,18 @@ public class ReporteService {
 
     public List<PruebaDto> obtenerIncidentesEmpleado(Integer idEmpleado) {
         List<NotificacionRadioExcedidoDto> notificaciones = restriccionesService.getNotificacionesRadioExcedido();
-        System.out.println(notificaciones);
         return notificaciones.stream()
                 .map(this::buscarPruebaDeNotificacion)
+                .filter(Objects::nonNull)
                 .filter(prueba -> prueba.getEmpleado().getLegajo().equals(idEmpleado)) // Filtra después
                 .collect(Collectors.toList());
     }
     public List<PruebaDto> obtenerIncidentes() {
         List<NotificacionRadioExcedidoDto> notificaciones = restriccionesService.getNotificacionesRadioExcedido();
-        System.out.println(notificaciones);
-        // Mapea las notificaciones a PruebaDto
+
         return notificaciones.stream()
                 .map(this::buscarPruebaDeNotificacion)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 

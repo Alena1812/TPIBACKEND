@@ -42,6 +42,7 @@ public class PruebaController {
     public ResponseEntity<?> getPruebaById(@PathVariable Integer id) {
         try {
             PruebaDto found = service.findById(id);
+            System.out.println(found);
             return ResponseEntity.ok(found);
         } catch (ServiceException e) {
             ErrorResponse errorResponse = new ErrorResponse(
